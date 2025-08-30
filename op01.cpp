@@ -26,4 +26,3 @@ extern "C" void kernel_main() {
     while (true) {
         // Do nothing, let the scheduler handle everything
     }
-}
