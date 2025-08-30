@@ -31,4 +31,33 @@ int main() {
         Process(3, -5)   // higher priority
     };
 
-    
+    // Red-Black tree (std::set)
+    set<Process> runQueue(processes.begin(), processes.end());
+
+    int totalTime = 20;   // simulate 20 units of CPU time
+    int currentTime = 0;
+
+    cout << "CFS Scheduling Simulation\n";
+    cout << "---------------------------------\n";
+    cout << "Time\tPID\tNice\tVruntime\n";
+
+    while (currentTime < totalTime) {
+        // Pick process with lowest vruntime
+        auto it = runQueue.begin();
+        Process current = *it;
+        runQueue.erase(it);
+
+        // Simulate running this process for 1 unit
+        currentTime++;
+        current.vruntime += 1.0 * (1024.0 / current.weight);
+
+        // Reinsert into runQueue
+        runQueue.insert(current);
+
+        cout << currentTime << "\t" << current.pid 
+             << "\t" << current.nice 
+             << "\t" << fixed << setprecision(2) << current.vruntime << "\n";
+    }
+
+    return 0;
+}
